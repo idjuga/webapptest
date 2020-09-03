@@ -18,7 +18,7 @@ class m200903_074554_create_payments_table extends Migration
 
         $this->createTable('{{%payments}}', [
             'id' => $this->primaryKey(),
-            'client_id' => $this->integer()->notNull(),
+            'user_id' => $this->integer()->notNull(),
             'name' => $this->string()->notNull(),
             'type' => $this->string()->notNull(),
             'description' => $this->text(),
@@ -28,16 +28,23 @@ class m200903_074554_create_payments_table extends Migration
         ], $tableOptions);
 
         $this->createIndex(
-            'idx-payments-client_id',
+            'idx-payments-user_id',
             '{{%payments}}',
-            'client_id'
+            'user_id'
+        );
+
+        $this->createIndex(
+            'idx-unique-payments-name-user_id',
+            '{{%payments}}',
+            'name, user_id',
+            true
         );
 
         $this->addForeignKey(
-            'fk-payments-client_id',
+            'fk-payments-user_id',
             '{{%payments}}',
-            'client_id',
-            '{{%clients}}',
+            'user_id',
+            '{{%user}}',
             'id',
             'CASCADE'
         );

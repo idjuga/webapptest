@@ -34,6 +34,13 @@ class m200903_072232_create_clients_table extends Migration
             'user_id'
         );
 
+        $this->createIndex(
+            'idx-unique-clients-name-user_id',
+            '{{%clients}}',
+            'name, user_id',
+            true
+        );
+
         $this->addForeignKey(
             'fk-clients-user_id',
             '{{%clients}}',
