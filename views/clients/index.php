@@ -12,7 +12,16 @@ $this->title = 'Clients';
         'dataProvider' => $dataProvider,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
-            'name',
+            [
+                'attribute' => 'name',
+                'format' => 'raw',
+                'value' => function($data){
+                    return Html::a(
+                        $data->name,
+                        \yii\helpers\Url::toRoute(['/clients/view','id'=>$data->id])
+                    );
+                }
+            ],
             [
                 'attribute' => 'status',
                 'format' => 'raw',
